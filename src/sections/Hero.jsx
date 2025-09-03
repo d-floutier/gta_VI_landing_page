@@ -1,10 +1,10 @@
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
+import { useMaskSettings } from "../../constants";
 import ComingSoon from "./ComingSoon";
-import { useMaskSettings } from "../../constants/index";
 
-const Header = () => {
+const Hero = () => {
   const { initialMaskPos, initialMaskSize, maskPos, maskSize } =
     useMaskSettings();
 
@@ -14,14 +14,9 @@ const Header = () => {
       maskSize: initialMaskSize,
     });
 
-    gsap.set(".mask-logo", {
-      marginTop: "-100vh",
-      opacity: 0,
-    });
+    gsap.set(".mask-logo", { marginTop: "-100vh", opacity: 0 });
 
-    gsap.set(".entrance-message", {
-      marginTop: "0vh",
-    });
+    gsap.set(".entrance-message", { marginTop: "0vh" });
 
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -34,21 +29,10 @@ const Header = () => {
     });
 
     tl.to(".fade-out", { opacity: 0, ease: "power1.inOut" })
-      .to(".scale-out", {
-        scale: 1,
-        ease: "power1.inOut",
-      })
-      .to(
-        ".mask-wrapper",
-        {
-          maskSize,
-          ease: "power1.inOut",
-        },
-        "<"
-      )
-      .to(".mask-wrapper", {
-        opacity: 0,
-      })
+      .to(".scale-out", { scale: 1, ease: "power1.inOut" })
+      .to(".mask-wrapper", { maskSize, ease: "power1.inOut" }, "<")
+      .to(".mask-wrapper", { maskPos, ease: "power1.inOut" }, "<")
+      .to(".mask-wrapper", { opacity: 0 })
       .to(
         ".overlay-logo",
         {
@@ -86,30 +70,29 @@ const Header = () => {
         />
         <img
           src="/images/watch-trailer.png"
-          alt="watch-trailer"
+          alt="trailer"
           className="trailer-logo fade-out"
         />
         <div className="play-img fade-out">
           <img src="/images/play.png" alt="play" className="w-7 ml-1" />
         </div>
       </div>
+
       <div>
         <img
           src="/images/big-hero-text.svg"
-          alt="hero"
+          alt="logo"
           className="size-full object-cover mask-logo"
         />
       </div>
+
       <div className="fake-logo-wrapper">
-        <img
-          src="/images/big-hero-text.svg"
-          alt="hero"
-          className="overlay-logo"
-        />
+        <img src="/images/big-hero-text.svg" className="overlay-logo" />
       </div>
+
       <ComingSoon />
     </section>
   );
 };
 
-export default Header;
+export default Hero;
